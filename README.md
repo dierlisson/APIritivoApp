@@ -32,6 +32,14 @@ Este projeto consome os dados da **TheMealDB**. A escolha por esta API pública 
 
 Diferente de alternativas que exigem autenticação rigorosa, a TheMealDB é 100% gratuita, não impõe limites estritos de requisições e **não exige a configuração prévia de uma chave de autenticação (API Key)**. Isso garante que o projeto seja totalmente *plug and play* — basta clonar, compilar e rodar imediatamente, sem burocracias.
 
+## 📹 Demonstração do App
+
+Confira o aplicativo em funcionamento, demonstrando a sincronização com a API, adição e remoção de tarefas e a funcionalidade "Pull to Refresh".
+
+<video src="https://github.com/user-attachments/assets/7ce9a04a-df10-4185-b41c-16e707e6af8f" controls="controls" style="max-width: 100%; height: auto;">
+  Seu navegador não suporta a tag de vídeo.
+</video>
+
 ## 📂 Estrutura do Projeto
 
 A base de código está organizada por domínios de responsabilidade (`feature-by-layer` ajustado):
@@ -64,13 +72,10 @@ Para rodar os testes:
 2. Navegue até a pasta `app/src/test/java/.../ui/viewmodel/`.
 3. Clique com o botão direito no arquivo `RecipeViewModelTest.kt` e selecione **Run 'RecipeViewModelTest'**.
 
-## 📹 Demonstração do App
 
-Confira o aplicativo em funcionamento, demonstrando a sincronização com a API, adição e remoção de tarefas e a funcionalidade "Pull to Refresh".
 
-<video src="https://github.com/user-attachments/assets/8d186fb0-f384-451f-b41d-2cc316616ca7" controls="controls" style="max-width: 100%; height: auto;">
-  Seu navegador não suporta a tag de vídeo.
-</video>
+
+
 
 
 
