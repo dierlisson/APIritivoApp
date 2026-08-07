@@ -1,84 +1,251 @@
 # APIritivo 🍽️
 
-![Kotlin](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=android&logoColor=white)
+Aplicativo Android para consulta de receitas culinárias, desenvolvido com Kotlin, Jetpack Compose, MVVM e integração com a API TheMealDB.
 
-APIritivo é um aplicativo Android nativo desenvolvido para explorar e visualizar receitas culinárias. O projeto foi construído com as tecnologias e arquiteturas mais modernas recomendadas pelo Google, servindo como uma demonstração prática de desenvolvimento escalável, reativo e testável.
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)
+![Android](https://img.shields.io/badge/Android-API%2024%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-2024.04.01-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
 
-## 🚀 Funcionalidade
+## 📋 Sobre o projeto
 
-* **Catálogo de Receitas:** Listagem fluida de pratos consumidos diretamente de uma API pública.
-* **Detalhes da Receita:** Visualização aprofundada contendo a imagem em alta qualidade e as instruções de preparo de cada prato.
-* **Tratamento de Estado:** Feedback visual completo para o usuário, incluindo estados de carregamento (Loading) e tratamento amigável de erros de rede com opção de tentar novamente (Retry).
-* **Navegação Declarativa:** Transições de tela seguras utilizando o Jetpack Compose Navigation.
+O **APIritivo** é um aplicativo Android nativo que permite consultar receitas disponibilizadas pela API pública [TheMealDB](https://www.themealdb.com/).
 
-## 🛠️ Stack Tecnológica e Arquitetura
+A aplicação apresenta um catálogo com imagem e nome dos pratos. Ao selecionar uma receita, o usuário pode visualizar sua imagem ampliada e as instruções de preparo.
 
-O aplicativo segue estritamente a arquitetura **MVVM (Model-View-ViewModel)**, garantindo a separação de responsabilidades e facilitando a cobertura de testes.
+O projeto foi desenvolvido com foco em consumo de API REST, gerenciamento de estados da interface, navegação entre telas, injeção de dependências e testes unitários da camada de apresentação.
 
-* **Linguagem:** [Kotlin](https://kotlinlang.org/)
-* **Interface (UI):** [Jetpack Compose](https://developer.android.com/jetpack/compose) (Componentes declarativos, `LazyColumn`, `Scaffold`)
-* **Navegação:** [Navigation Compose](https://developer.android.com/jetpack/compose/navigation)
-* **Injeção de Dependência:** [Dagger Hilt](https://dagger.dev/hilt/)
-* **Requisições de Rede:** [Retrofit](https://square.github.io/retrofit/) + [Gson](https://github.com/google/gson)
-* **Carregamento de Imagens:** [Coil](https://coil-kt.github.io/coil/compose/) (Assíncrono e otimizado para Compose)
-* **Programação Assíncrona & Reatividade:** [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
-* **Testes Unitários:** [JUnit4](https://junit.org/junit4/), [MockK](https://mockk.io/) e `kotlinx-coroutines-test`
+## 📸 Screenshots
 
-## 💡 Sobre a API Utilizada (TheMealDB)
+| Catálogo de receitas | Detalhes da receita |
+|---|---|
+| <img src="docs/screenshots/recipe-list.png" alt="Tela com a lista de receitas" width="300"> | <img src="docs/screenshots/recipe-details.png" alt="Tela com os detalhes e instruções de uma receita" width="300"> |
 
-Este projeto consome os dados da **TheMealDB**. A escolha por esta API pública ocorreu estrategicamente para facilitar a execução, avaliação e os testes do aplicativo por qualquer pessoa que clone o repositório.
+## 🎥 Demonstração
 
-Diferente de alternativas que exigem autenticação rigorosa, a TheMealDB é 100% gratuita, não impõe limites estritos de requisições e **não exige a configuração prévia de uma chave de autenticação (API Key)**. Isso garante que o projeto seja totalmente *plug and play* — basta clonar, compilar e rodar imediatamente, sem burocracias.
-
-## 📹 Demonstração do App
-
-Confira o aplicativo em funcionamento, demonstrando a sincronização com a API, adição e remoção de tarefas e a funcionalidade "Pull to Refresh".
+Confira o aplicativo em funcionamento, demonstrando o carregamento das receitas, a navegação para os detalhes, o tratamento dos estados da interface e a recuperação após falhas de rede.
 
 <video src="https://github.com/user-attachments/assets/7ce9a04a-df10-4185-b41c-16e707e6af8f" controls="controls" style="max-width: 100%; height: auto;">
-  Seu navegador não suporta a tag de vídeo.
+  Seu navegador não suporta a reprodução do vídeo.
 </video>
 
-## 📂 Estrutura do Projeto
+## ✨ Funcionalidades
 
-A base de código está organizada por domínios de responsabilidade (`feature-by-layer` ajustado):
+- **Catálogo de receitas:** listagem dos pratos obtidos pela API TheMealDB.
+- **Detalhes da receita:** exibição da imagem, do nome e das instruções de preparo.
+- **Carregamento de imagens:** obtenção assíncrona das imagens com Coil.
+- **Estado de carregamento:** apresentação de indicador enquanto os dados são buscados.
+- **Tratamento de erros:** mensagem específica quando ocorre uma falha na requisição.
+- **Tentativa de recuperação:** botão para repetir o carregamento após erros de rede.
+- **Navegação entre telas:** transição entre o catálogo e os detalhes utilizando Navigation Compose.
+- **Interface reativa:** atualização da tela a partir dos estados emitidos pelo ViewModel.
 
-* `data/`: Modelos de dados (`Meal`, `MealResponse`) e interfaces de comunicação (`MealApi`).
-* `di/`: Módulos de injeção de dependência do Hilt (`NetworkModule`).
-* `ui/`:
-    * `screens/`: Telas construídas com Jetpack Compose (`RecipeListScreen`, `RecipeDetailScreen`).
-    * `viewmodel/`: Lógica de apresentação e gerenciamento de estado (`RecipeViewModel`, `RecipeUiState`).
+## 🏗️ Arquitetura
 
+O projeto utiliza o padrão de apresentação **MVVM — Model-View-ViewModel**, separando a interface, o gerenciamento de estado e o acesso aos dados.
 
-## 💻 Como executar o projeto
+### Model
 
-1. Faça o clone deste repositório:
-   ```bash
-   git clone https://github.com/dierlisson/APIritivoApp.git
-    ``` 
-2. Abra o projeto no Android Studio (versão Iguana ou superior recomendada).
+Representa os dados recebidos da API, incluindo:
 
-3. Aguarde o Gradle sincronizar todas as dependências.
+- identificador da receita;
+- nome do prato;
+- endereço da imagem;
+- instruções de preparo.
 
-4. Clique em Run 'app' (Shift + F10) para rodar no emulador ou dispositivo físico.
+### ViewModel
 
-## 🧪 Testes
+O `RecipeViewModel` é responsável por:
 
-O projeto conta com testes unitários focados na camada de apresentação (`ViewModel`), garantindo que a lógica de busca de receitas e as emissões de estado (`Loading`, `Success`, `Error`) funcionem perfeitamente.
+- iniciar o carregamento das receitas;
+- realizar a chamada à API;
+- validar a resposta recebida;
+- tratar falhas de rede;
+- disponibilizar o estado da interface por meio de `StateFlow`.
 
-Para rodar os testes:
+### View
+
+As telas foram construídas com Jetpack Compose:
+
+- `RecipeListScreen`: apresenta o catálogo e os estados de carregamento e erro;
+- `RecipeDetailScreen`: apresenta a imagem e as instruções da receita selecionada.
+
+### Estados da interface
+
+O estado da tela é representado por uma `sealed class`:
+
+```kotlin
+sealed class RecipeUiState {
+    object Loading : RecipeUiState()
+    data class Success(val recipes: List<Meal>) : RecipeUiState()
+    data class Error(val message: String) : RecipeUiState()
+}
+```
+
+Essa modelagem permite que a interface represente de forma explícita os possíveis resultados da operação.
+
+## 🛠️ Tecnologias utilizadas
+
+| Tecnologia | Versão | Aplicação no projeto |
+|---|---:|---|
+| **Kotlin** | 2.0.21 | Linguagem principal do aplicativo. |
+| **Jetpack Compose** | BOM 2024.04.01 | Construção declarativa das telas. |
+| **Material Design 3** | Gerenciada pelo BOM | Componentes e estilos da interface. |
+| **MVVM** | — | Separação entre interface, estado e acesso aos dados. |
+| **StateFlow** | — | Gerenciamento reativo do estado da interface. |
+| **Kotlin Coroutines** | 1.7.3 nos testes | Execução das operações assíncronas. |
+| **Retrofit** | 2.9.0 | Comunicação com a API REST. |
+| **Gson Converter** | 2.9.0 | Conversão das respostas JSON em objetos Kotlin. |
+| **Dagger Hilt** | 2.51.1 | Injeção das dependências de rede. |
+| **Navigation Compose** | 2.7.5 | Navegação entre o catálogo e os detalhes. |
+| **Coil Compose** | 2.5.0 | Carregamento assíncrono das imagens. |
+| **JUnit 4** | 4.13.2 | Execução dos testes unitários. |
+| **MockK** | 1.13.8 | Simulação das respostas da API nos testes. |
+| **Turbine** | 1.0.0 | Suporte à validação de fluxos em testes. |
+
+## 💡 API utilizada
+
+O aplicativo consome a API pública **TheMealDB**.
+
+A requisição utilizada pelo projeto consulta o catálogo de receitas pelo endpoint:
+
+```text
+https://www.themealdb.com/api/json/v1/1/search.php?s=
+```
+
+Como esse endpoint não exige uma chave de autenticação no fluxo implementado, o projeto pode ser executado sem configurações adicionais de credenciais.
+
+## 📂 Estrutura do projeto
+
+```text
+app/src/main/java/com/example/apiritivo/
+├── data/
+│   ├── model/
+│   │   ├── Meal.kt
+│   │   └── MealResponse.kt
+│   └── remote/
+│       └── MealApi.kt
+├── di/
+│   └── NetworkModule.kt
+├── ui/
+│   ├── screens/
+│   │   ├── RecipeListScreen.kt
+│   │   └── RecipeDetailScreen.kt
+│   └── viewmodel/
+│       └── RecipeViewModel.kt
+└── MainActivity.kt
+```
+
+## 🚧 Desafios técnicos e aprendizados
+
+### 1. Representação dos estados da interface
+
+**Desafio:** representar corretamente o carregamento, o resultado da API e as possíveis falhas de conexão sem espalhar várias variáveis de controle pela tela.
+
+**Solução:** criação da `RecipeUiState` como uma `sealed class`, reunindo os estados `Loading`, `Success` e `Error`.
+
+**Aprendizado:** modelar estados de forma explícita torna a interface mais previsível e reduz combinações inválidas de dados.
+
+### 2. Recuperação após falhas de rede
+
+**Desafio:** permitir que o usuário tente carregar novamente as receitas sem precisar reiniciar o aplicativo.
+
+**Solução:** o estado de erro apresenta uma mensagem e o botão **Tentar Novamente**, que executa novamente o método `fetchRecipes()`.
+
+**Aprendizado:** erros de rede devem ser tratados como parte do fluxo normal da aplicação, oferecendo feedback e uma ação de recuperação.
+
+### 3. Validação da resposta da API
+
+**Desafio:** uma resposta HTTP pode ser recebida sem garantir que a lista de receitas esteja disponível.
+
+**Solução:** validação de `isSuccessful`, do corpo da resposta e da propriedade `meals` antes de emitir o estado de sucesso.
+
+**Aprendizado:** a integração com APIs exige tratamento tanto para exceções de conexão quanto para respostas sem os dados esperados.
+
+### 4. Injeção das dependências de rede
+
+**Desafio:** evitar que o ViewModel fosse responsável por criar diretamente o Retrofit e a implementação da API.
+
+**Solução:** configuração de um módulo do Dagger Hilt para fornecer instâncias de `Retrofit` e `MealApi`.
+
+**Aprendizado:** a injeção de dependências reduz o acoplamento e facilita a substituição da API por mocks durante os testes.
+
+### 5. Testes de operações assíncronas
+
+**Desafio:** testar um ViewModel que inicia uma coroutine assim que é criado.
+
+**Solução:** utilização de `StandardTestDispatcher`, `Dispatchers.setMain()` e `advanceUntilIdle()` para controlar a execução das coroutines.
+
+**Aprendizado:** testes de código assíncrono precisam controlar o dispatcher e aguardar explicitamente a conclusão das tarefas.
+
+### 6. Navegação para os detalhes
+
+**Desafio:** apresentar as informações da receita selecionada em uma tela independente, mantendo uma ação de retorno clara.
+
+**Solução:** separação entre `RecipeListScreen` e `RecipeDetailScreen`, com navegação gerenciada pelo Navigation Compose.
+
+**Aprendizado:** telas com responsabilidades específicas facilitam a manutenção e tornam o fluxo de navegação mais organizado.
+
+## 💻 Como executar
+
+### Pré-requisitos
+
+- Android Studio;
+- JDK 11;
+- Android SDK instalado;
+- emulador ou dispositivo Android;
+- conexão com a internet para acessar a API.
+
+O aplicativo possui suporte mínimo ao **Android 7.0 — API 24**.
+
+### Clonar o projeto
+
+```bash
+git clone https://github.com/dierlisson/APIritivoApp.git
+```
+
+Acesse a pasta:
+
+```bash
+cd APIritivoApp
+```
+
+Depois:
+
 1. Abra o projeto no Android Studio.
-2. Navegue até a pasta `app/src/test/java/.../ui/viewmodel/`.
-3. Clique com o botão direito no arquivo `RecipeViewModelTest.kt` e selecione **Run 'RecipeViewModelTest'**.
+2. Aguarde a sincronização do Gradle.
+3. Inicie um emulador ou conecte um dispositivo Android.
+4. Execute o módulo `app` pelo botão **Run**.
 
+## 🧪 Como rodar os testes
 
+Os testes unitários validam:
 
+- emissão de `Success` quando a API retorna receitas;
+- emissão de `Error` quando ocorre uma falha de rede.
 
+Execute o comando na raiz do projeto.
 
+### Windows
 
+```bash
+gradlew.bat testDebugUnitTest
+```
 
+### macOS ou Linux
 
-## 👤 Autor
+```bash
+./gradlew testDebugUnitTest
+```
 
-    Desenvolvido por **Dierlisson Justiniano** como parte de um desafio prático de desenvolvimento Android.
+O relatório será gerado em:
+
+```text
+app/build/reports/tests/testDebugUnitTest/index.html
+```
+
+## 👤 Autor e contato profissional
+
+Desenvolvido por **Dierlisson Justiniano** como projeto de portfólio em desenvolvimento Android.
+
+- **LinkedIn:** [linkedin.com/in/dierlissonjustiniano](https://www.linkedin.com/in/dierlissonjustiniano/)
+- **GitHub:** [github.com/dierlisson](https://github.com/dierlisson)
